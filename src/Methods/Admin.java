@@ -46,6 +46,93 @@ public class Admin {
         }
     }
 
+     public void addNewBook() {
+        Welcome addWelcome = new Welcome() {
+            @Override
+            void welcome() {
+                System.out.println(" - ".repeat(8) + " ADD NEW BOOK " + " - ".repeat(9));
+            }
+        };
+
+        addWelcome.welcome();
+
+        Book defaultBooks = new Book();
+        defaultBooks.availableBooks();
+
+        System.out.print("\tEnter Book Title: ");
+        String title = sc.nextLine();
+
+        int nextId = Book.book.size() + 1;
+
+        if (Book.book.containsValue(title)) {
+            System.out.println("\tThat book already exists in the library.");
+        } else {
+            Book.book.put(nextId, title);
+            System.out.println(" - ".repeat(22));
+            System.out.println("\t\tSuccessfully added new book:");
+            System.out.println("\t\tBook ID: " + nextId);
+            System.out.println("\t\tBook Title: " + title);
+            System.out.println(" - ".repeat(22));
+        }
+    }
+
+    public void deleteBook() {
+        Welcome deleteWelcome = new Welcome() {
+            @Override
+            void welcome() {
+                System.out.println(" - ".repeat(8) + " DELETE BOOK " + " - ".repeat(9));
+            }
+        };
+
+        deleteWelcome.welcome();
+
+        if (Book.book.isEmpty()) {
+            System.out.println("\t\tNo books available to delete.");
+            return;
+        }
+
+        System.out.print("\tEnter Book ID to delete: ");
+        int id = sc.nextInt();
+        sc.nextLine();
+
+        if (Book.book.containsKey(id)) {
+            String removedTitle = Book.book.remove(id);
+            System.out.println(" - ".repeat(22));
+            System.out.println("\t\tSuccessfully deleted:");
+            System.out.println("\t\tBook ID: " + id);
+            System.out.println("\t\tBook Title: " + removedTitle);
+            System.out.println(" - ".repeat(22));
+        } else {
+            System.out.println("\tBook ID not found.");
+        }
+    }
+
+    public void showAvailableBooks() {
+        Welcome viewWelcome = new Welcome() {
+            @Override
+            void welcome() {
+                System.out.println(" - ".repeat(8) + " AVAILABLE BOOKS " + " - ".repeat(9));
+            }
+        };
+
+        Book book = new Book();
+        book.availableBooks();
+
+        viewWelcome.welcome();
+
+        if (Book.book.isEmpty()) {
+            System.out.println("\t\tNo available books in the library.");
+        } else {
+            for (Map.Entry<Integer, String> entry : Book.book.entrySet()) {
+                Integer id = entry.getKey();
+                String title = entry.getValue();
+                System.out.println("\t\tBook ID: " + id);
+                System.out.println("\t\tBook Title: " + title);
+                System.out.println(" - ".repeat(22));
+            }
+        }
+    }
+
     public void studentLogin() {
         Welcome welcomeStudent = new Welcome() {
             @Override
